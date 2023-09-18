@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -9,16 +9,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SignupComponent {
   type: string = "password";
   isText: boolean = false;
-  eyeIcon: string = "fa-eye-slash"
-  signUpForm!: FormGroup
+  eyeIcon: string = "fa-eye-slash";
+
+  signUpForm!: FormGroup;
   constructor(private fb: FormBuilder) { }
 
-  ngOnInint(): void {
+  ngOnInit(): void {
     this.signUpForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      userName: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
       email: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     })
   }
@@ -27,6 +28,29 @@ export class SignupComponent {
     this.isText = !this.isText
     this.isText ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash"
     this.isText ? this.type = "text" : this.type = "password"
+  }
+
+  onSubmit() {
+    if (this.signUpForm.valid) {
+      console.log(this.signUpForm.value)
+      //send the object to database
+    } else {
+      // console.log("Form is not valid")
+      //throw the error using toaster and with required field
+      this.validateAllFormFields(this.signUpForm);
+      alert("Your Form is invalid ")
+    }
+  }
+
+  private validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsDirty({ onlySelf: true })
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control)
+      }
+    })
   }
 
 }

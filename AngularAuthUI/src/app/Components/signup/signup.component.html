@@ -4,49 +4,77 @@
             <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
                 <div class="panel border bg-white">
                     <div class="panel-heading">
-                        <h3 class="pt-4 font-weight-bold">Sign Up </h3>
+                        <h3 class="pt-4 font-weight-bold">Sign Up</h3>
                     </div>
                     <div class="panel-body p-3">
                         <form [formGroup]="signUpForm">
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field"
+                                    [class.error]="signUpForm.controls['firstname'].dirty && signUpForm.hasError('required','firstname')">
                                     <span class="fa fa-user p-2"></span>
-                                    <input formControlName="firstName" type="text" placeholder="FirstName">
+                                    <input formControlName="firstname" type="text" placeholder="First Name">
                                 </div>
                             </div>
+                            <small
+                                *ngIf="signUpForm.controls['firstname'].dirty && signUpForm.hasError('required','firstname')"
+                                class="text-danger">firstname is Requred</small>
+
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field"
+                                    [class.error]="signUpForm.controls['lastname'].dirty && signUpForm.hasError('required','lastname')">
                                     <span class="fa fa-user p-2"></span>
-                                    <input formControlName="lastName"  type="text" placeholder="LastName">
+                                    <input formControlName="lastname" type="text" placeholder="Last Name">
                                 </div>
                             </div>
+                            <small
+                                *ngIf="signUpForm.controls['lastname'].dirty && signUpForm.hasError('required','lastname')"
+                                class="text-danger">lastname is Requred</small>
+
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field"
+                                    [class.error]="signUpForm.controls['email'].dirty && signUpForm.hasError('required','email')">
                                     <span class="fa fa-user p-2"></span>
-                                    <input formControlName="email"  type="text" placeholder="Email">
+                                    <input formControlName="email" type="text" placeholder="Email Id">
                                 </div>
                             </div>
+                            <small *ngIf="signUpForm.controls['email'].dirty && signUpForm.hasError('required','email')"
+                                class="text-danger">email is Requred</small>
+
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field"
+                                    [class.error]="signUpForm.controls['username'].dirty && signUpForm.hasError('required','username')">
                                     <span class="fa fa-user p-2"></span>
-                                    <input formControlName="userName" type="text" placeholder="Username">
+                                    <input formControlName="username" type="text" placeholder="User Name">
                                 </div>
                             </div>
+                            <small
+                                *ngIf="signUpForm.controls['username'].dirty && signUpForm.hasError('required','username')"
+                                class="text-danger">Username is Requred</small>
+
+
                             <div class="form-group pt-3">
-                                <div class="input-field">
+                                <div class="input-field"
+                                    [class.error]="signUpForm.controls['password'].dirty && signUpForm.hasError('required','password')">
                                     <span class="fa fa-lock p-2"></span>
-                                    <input formControlName="password"   [type]="type" placeholder="Password">
+                                    <input formControlName="password" [type]="type" placeholder="Password">
                                     <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
                                 </div>
                             </div>
-
-                            <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Sign Up </button>
+                            <small
+                                *ngIf="signUpForm.controls['password'].dirty && signUpForm.hasError('required','password')"
+                                class="text-danger">Password is Requred</small>
+                            <div class="form-inline fr mt-4">
+                                <a id="forget" class="font-weight-bold"> Forget password ?</a>
+                            </div>
+                            <!-- [disabled]="loginForm.invalid" -->
+                            <button (click)="onSubmit()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Sign
+                                Up</button>
                             <div class="text-center pt-4 text-muted">Already have an account?
                                 <a id="forget" routerLink="/login"> Login</a>
                             </div>
                         </form>
                     </div>
-                    <div class=" mx-3 my-2 py-2 bordert ">
+                    <!-- <div class=" mx-3 my-2 py-2 bordert ">
                         <div class="text-center py-3 ">
                             <a href="https://www.instagram.com/" target="_blank" class="px-2"><img
                                     src="https://th.bing.com/th/id/OIP.72S49bENY6EMqQr0n7eg_AHaHZ?w=211&h=210&c=7&r=0&o=5&dpr=1.3&pid=1.7"></a>
@@ -57,10 +85,9 @@
                             <a href="https://github.com/Ravi9129" target="_blank" class="px-2"> <img
                                     src="https://th.bing.com/th/id/OIP.fqZ9-PPqcG_cm0k3JfoINQHaEK?w=279&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"></a>
 
-                            <a></a>
-                            <a></a>
+
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

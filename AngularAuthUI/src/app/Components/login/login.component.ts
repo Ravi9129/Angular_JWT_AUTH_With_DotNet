@@ -35,8 +35,8 @@ export class LoginComponent {
     } else {
       // console.log("Form is not valid")
       //throw the error using toaster and with required field
-    this.validateAllFormFields(this.loginForm);
-    alert("Your Form is invalid ")
+      this.validateAllFormFields(this.loginForm);
+      alert("Your Form is invalid ")
     }
   }
 
@@ -45,8 +45,8 @@ export class LoginComponent {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
         control.markAsDirty({ onlySelf: true })
-      }else if(control instanceof FormGroup){
-this.validateAllFormFields(control)
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control)
       }
     })
   }
