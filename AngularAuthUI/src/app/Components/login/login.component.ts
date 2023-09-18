@@ -27,4 +27,14 @@ export class LoginComponent {
     this.isText ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash"
     this.isText ? this.type = "text" : this.type = "password"
   }
+
+  onSubmit(){
+    if(this.loginForm.valid){
+      console.log(this.loginForm.value)
+      //send the object to database
+    }else{
+      console.log("Form is not valid")
+      //throw the error using toaster and with required field
+    }
+  }
 }
