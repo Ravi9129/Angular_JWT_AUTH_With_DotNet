@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import validateforms from 'src/app/helpers/validateforms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent {
   eyeIcon: string = "fa-eye-slash";
 
   loginForm!: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -29,10 +30,19 @@ export class LoginComponent {
     this.isText ? this.type = "text" : this.type = "password"
   }
 
-  onSubmit() {
+  onLogin() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value)
+    //  console.log(this.loginForm.value)
       //send the object to database
+      this.auth.login(this.loginForm.value).subscribe({
+        next: (res) => {
+          alert(res.message)
+        },
+        error: (err) => {
+          alert(err.error.message)
+        }
+      })
+
     } else {
       // console.log("Form is not valid")
       //throw the error using toaster and with required field

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import validateforms from 'src/app/helpers/validateforms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +15,7 @@ export class SignupComponent {
   eyeIcon: string = "fa-eye-slash";
 
   signUpForm!: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private auth: AuthService, private router:Router) { }
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
@@ -32,9 +34,19 @@ export class SignupComponent {
   }
 
   onSubmit() {
-    if (this.signUpForm.valid) {
-      console.log(this.signUpForm.value)
+    if (this.signUpForm.valid){
+     // console.log(this.signUpForm.value)
       //send the object to database
+      this.auth.signUp(this.signUpForm.value).subscribe({
+        next: (res => {
+          alert(res.message);
+          this.signUpForm.reset();
+          this.router.navigate(['login'])
+        }),
+        error: (err => {
+          alert(err?.error.message)
+        })
+      })
     } else {
       // console.log("Form is not valid")
       //throw the error using toaster and with required field
@@ -43,6 +55,15 @@ export class SignupComponent {
     }
   }
 
-
+  // private validateAllFormFields(formGroup: FormGroup) {
+  //   Object.keys(formGroup.controls).forEach(field => {
+  //     const control = formGroup.get(field);
+  //     if (control instanceof FormControl) {
+  //       control.markAsDirty({ onlySelf: true })
+  //     } else if (control instanceof FormGroup) {
+  //       this.validateAllFormFields(control)
+  //     }
+  //   })
+  // }
 
 }
