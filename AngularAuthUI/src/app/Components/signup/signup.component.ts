@@ -33,27 +33,54 @@ export class SignupComponent {
     this.isText ? this.type = "text" : this.type = "password"
   }
 
+
+
   onSubmit() {
-    if (this.signUpForm.valid){
-     // console.log(this.signUpForm.value)
-      //send the object to database
-      this.auth.signUp(this.signUpForm.value).subscribe({
-        next: (res => {
-          alert(res.message);
+    if (this.signUpForm.valid) {
+      console.log(this.signUpForm.value);
+      let signUpObj = {
+        ...this.signUpForm.value,
+        role:'',
+        token:''
+      }
+      this.auth.signUp(signUpObj)
+      .subscribe({
+        next:(res=>{
+          console.log(res.message);
           this.signUpForm.reset();
-          this.router.navigate(['login'])
+          this.router.navigate(['login']);
+          alert(res.message)
         }),
-        error: (err => {
+        error:(err=>{
           alert(err?.error.message)
         })
       })
     } else {
-      // console.log("Form is not valid")
-      //throw the error using toaster and with required field
-      validateforms.validateAllFormFields(this.signUpForm);
-      alert("Your Form is invalid ")
+      validateforms.validateAllFormFields(this.signUpForm); //{7}
     }
   }
+
+  // onSubmit() {
+  //   if (this.signUpForm.valid){
+  //    // console.log(this.signUpForm.value)
+  //     //send the object to database
+  //     this.auth.signUp(this.signUpForm.value).subscribe({
+  //       next: (res => {
+  //         alert(res.message);
+  //         this.signUpForm.reset();
+  //         this.router.navigate(['login'])
+  //       }),
+  //       error: (err => {
+  //         alert(err?.error.message)
+  //       })
+  //     })
+  //   } else {
+  //     // console.log("Form is not valid")
+  //     //throw the error using toaster and with required field
+  //     validateforms.validateAllFormFields(this.signUpForm);
+  //     alert("Your Form is invalid ")
+  //   }
+  // }
 
   // private validateAllFormFields(formGroup: FormGroup) {
   //   Object.keys(formGroup.controls).forEach(field => {
