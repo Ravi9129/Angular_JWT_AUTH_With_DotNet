@@ -49,7 +49,10 @@ export class LoginComponent {
         next: (res) => {
           console.log(res.message)
           this.loginForm.reset();
-      
+      //authgaud
+
+      this.auth.storeToken(res.token);
+
           this.toast.success({detail:"Success",summary:res.message,duration:5000})
           this.router.navigate(['dashboard'])
         },
